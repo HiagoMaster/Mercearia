@@ -11,7 +11,10 @@ namespace Models
     {
         private static string stringDeConexao = "User ID=SA;Initial Catalog=Mercearia;Data Source=.\\SQLEXPRESS2019A;Password=Senailab02";
 
-        public static string StringDeConexao;
+        public static string StringDeConexao
+        {
+            get { return stringDeConexao; }
+        }
 
 
     }
