@@ -10,14 +10,6 @@ namespace Models
         public double Preco { get; set; }
         public double Estoque { get; set; }
 
-        public void Inserir()
-        {
-
-
-
-
-
-        }
     }
 
 }

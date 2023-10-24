@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public string Fone { get; set; }
+        public char Fone { get; set; }
     }
 }

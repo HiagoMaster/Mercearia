@@ -8,6 +8,8 @@ namespace DAL
     {
         public void Inserir(Usuario _usuario)
         {
+
+
             SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
             try
             {
