@@ -8,7 +8,7 @@ namespace DAL
     {
         public void Inserir(Cliente _cliente)
         {
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
@@ -34,7 +34,7 @@ namespace DAL
         }
         public void Alterar(Cliente _cliente)
         {
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
@@ -61,7 +61,7 @@ namespace DAL
         }
         public void Excluir(int _id)
         {
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
@@ -87,7 +87,7 @@ namespace DAL
         {
             List<Cliente> clienteList = new List<Cliente>();
             Cliente cliente;
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
@@ -123,7 +123,7 @@ namespace DAL
         {
             Cliente cliente = new Cliente();
 
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
 
             try
             {
@@ -157,5 +157,81 @@ namespace DAL
                 cn.Close();
             }
         }
+        public List<Cliente> BuscarPorNome(string _nome)
+        {
+            List<Cliente> clienteList = new List<Cliente>();
+            Cliente cliente;
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
+
+            try
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"SELECT Id, Nome, Fone FROM Cliente WHERE Nome LIKE @Nome";
+                cmd.Parameters.AddWithValue("@Nome", "%" + _nome + "%");
+
+                cn.Open();
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    cliente = new Cliente();
+                    while(rd.Read())
+                    {
+                        cliente.Id = (int)rd["Id"];
+                        cliente.Nome = rd["Nome"].ToString();
+                        cliente.Fone = (char)rd["Fone"];
+                    }
+                    return clienteList;
+
+                }
+
+
+
+            }
+            catch
+            {
+                throw new Exception("Ocorreu um erro ao tentar buscar cliente por nome no banco de dados");
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
+        public List<Cliente> BuscarPorTelefone(string _fone)
+        {
+            List<Cliente> clienteList = new List<Cliente>();
+            Cliente cliente;
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
+
+            try
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"SELECT Id, Nome, Fone FROM Cliente WHERE Fone LIKE @Telefone";
+                cmd.Parameters.AddWithValue("@Telefone", "%" + _fone + "%");
+
+                cn.Open();
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    while (rd.Read())
+                    {
+                        cliente = new Cliente();
+                        cliente.Id = (int)rd["Id"];
+                        cliente.Nome = rd["Nome"].ToString();
+                        cliente.Fone = (char)rd["Fone"];
+                        clienteList.Add(cliente);
+                    }
+                    return clienteList;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao tentar buscar cliente por telefone no banco de dados");
+            }
+            finally
+            {
+                cn.Close();
+            }
+
+        }
     }
+
 }
+

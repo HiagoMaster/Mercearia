@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace UIWinFormsApp
 {
-    public partial class FormBuscarUsuario : Form
+    public partial class FormBuscarCliente : Form
     {
-        public FormBuscarUsuario()
+        public FormBuscarCliente()
         {
             InitializeComponent();
         }
@@ -25,13 +25,16 @@ namespace UIWinFormsApp
                 switch (comboBoxBuscarPor.SelectedIndex)
                 {
                     case 0:
-                        bindingSourceUsuario.DataSource = new UsuarioBLL().BuscarPorNome(textBoxBuscarPor.Text);
+                        bindingSourceCliente.DataSource = new ClienteBLL().BuscarPorId(Convert.ToInt32(textBoxBuscarPor.Text));
                         break;
                     case 1:
-                        bindingSourceUsuario.DataSource = new UsuarioBLL().BuscarPorNomeUsuario(textBoxBuscarPor.Text);
+                        bindingSourceCliente.DataSource = new ClienteBLL().BuscarPorNome(textBoxBuscarPor.Text);
+                        break;
+                    case 2:
+                        bindingSourceCliente.DataSource = new ClienteBLL().BuscarPorTelefone(textBoxBuscarPor.Text);
                         break;
                     default:
-                        bindingSourceUsuario.DataSource = new UsuarioBLL().BuscarTodos();
+                        bindingSourceCliente.DataSource = new ClienteBLL().BuscarTodos();
                         break;
                 }
             }
@@ -43,3 +46,5 @@ namespace UIWinFormsApp
         }
     }
 }
+    
+

@@ -11,18 +11,18 @@ namespace DAL
     {
         public void Inserir(Produto _produto)
         {
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = "INSERT INTO PRODUTO(Id, Nome, Preco, Estoque)";
+                cmd.CommandText = "INSERT INTO PRODUTO(Id, Nome, Preco, Estoque, CodigoDeBarra)";
 
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.Parameters.AddWithValue("@Id", _produto.Id);
                 cmd.Parameters.AddWithValue("@Nome", _produto.Nome);
                 cmd.Parameters.AddWithValue("@Preco", _produto.Preco);
-                cmd.Parameters.AddWithValue("Estoque", _produto.Estoque);
-
+                cmd.Parameters.AddWithValue("@Estoque", _produto.Estoque);
+                cmd.Parameters.AddWithValue("@CodigoDeBarra", _produto.CodigoDeBarra);
                 cn.Open();
 
                 cmd.ExecuteNonQuery();
@@ -38,20 +38,20 @@ namespace DAL
         }
             public void Alterar(Produto _produto)
             {
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
 
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = "UPADATE PRODUTO SET = Id, Nome, Preco, Estoque";
+                cmd.CommandText = "UPADATE PRODUTO SET = Id, Nome, Preco, Estoque, CodigoDeBarra";
 
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 cmd.Parameters.AddWithValue("@Id", _produto.Id);
                 cmd.Parameters.AddWithValue("@Nome", _produto.Nome);
                 cmd.Parameters.AddWithValue("@Preco", _produto.Preco);
-                cmd.Parameters.AddWithValue("Estoque", _produto.Estoque);
-
+                cmd.Parameters.AddWithValue("@Estoque", _produto.Estoque);
+                cmd.Parameters.AddWithValue("@CodigoDeBarra", _produto.CodigoDeBarra);
                 cn.Open();
 
                 cmd.ExecuteNonQuery();
@@ -68,7 +68,7 @@ namespace DAL
             }
             public void Excluir(int _id)
             {
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
@@ -96,11 +96,11 @@ namespace DAL
             {
             List<Produto> produtoList = new List<Produto>();
             Produto produto;
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = "SELECT Id, Nome, Preco, Estoque";
+                cmd.CommandText = "SELECT Id, Nome, Preco, Estoque, CodigoDeBarra";
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 cn.Open();
@@ -113,6 +113,7 @@ namespace DAL
                         produto.Nome = rd["Nome"].ToString();
                         produto.Preco = Convert.ToDouble(rd["Preco"]);
                         produto.Estoque = (int)rd["Estoque"];
+                        produto.CodigoDeBarra = rd["CodigoDeBarra"].ToString();
                         produtoList.Add(produto);
 
                     }
@@ -122,7 +123,7 @@ namespace DAL
             }
             catch(Exception ex)
             {
-                throw new Exception("Ocorreu um erro ao tentar buscar novos usuarios");
+                throw new Exception("Ocorreu um erro ao tentar buscar novos produtos");
 
             }
             finally
@@ -140,12 +141,12 @@ namespace DAL
         {
             Produto produto;
 
-            SqlConnection cn = new SqlConnection(Constantes.StringDeConexao);
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
 
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = "SELECT Id, Nome, Preco, Estoque FROM PRODUTO";
+                cmd.CommandText = "SELECT Id, Nome, Preco, Estoque, CodigoDeBarra FROM PRODUTO";
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 cmd.Parameters.AddWithValue("@Id", _id);
@@ -160,6 +161,7 @@ namespace DAL
                         produto.Nome = rd["Nome"].ToString();
                         produto.Preco = Convert.ToDouble(rd["Preco"]);
                         produto.Estoque = (int)rd["Estoque"];
+                        produto.CodigoDeBarra = rd["CodigoDeBarra"].ToString();
                     }
                     return produto;
                 }
@@ -168,9 +170,9 @@ namespace DAL
 
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception("Ocorreu um erro ao tentar buscar novos usuarios");
+                throw new Exception("Ocorreu um erro ao tentar buscar novos produtos");
             }
             finally
             {
@@ -178,8 +180,88 @@ namespace DAL
             }
 
         }
+        public List<Produto> BuscarPorNome(string _nome)
+        {
+            List<Produto> produtoList = new List<Produto>();
+            Produto produto;
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
 
-         
+            try
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"SELECT Id, Nome, Preco, Estoque, CodigoDeBarra FROM Produto WHERE Nome LIKE @Nome";
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                cmd.Parameters.AddWithValue("@Nome", "%" + _nome + "%");
+
+                cn.Open();
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    produto = new Produto();
+                    while (rd.Read())
+                    {
+                        produto.Id = (int)rd["Id"];
+                        produto.Nome = rd["Nome"].ToString();
+                        produto.Preco = Convert.ToDouble(rd["Preco"]);
+                        produto.Estoque = (int)rd["Estoque"];
+                        produto.CodigoDeBarra = rd["CodigoDeBarra"].ToString();
+
+                    }
+                    return produtoList;
+                }
+
+            }
+            catch(Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao tentar buscar produto por nome no banco de dados");
+            }
+            finally
+            {
+                cn.Close();
+            }
+        }
+        public Produto BuscarPorCodigoDeBarra(string _codigoBarra)
+        {
+            Produto produto = new Produto();
+            SqlConnection cn = new SqlConnection(Conexao.StringDeConexao);
+
+            try
+            {
+                SqlCommand cmd = cn.CreateCommand();
+                cmd.CommandText = @"SELECT Id, Nome, Preco, Estoque, CodigoDeBarra FROM Produto WHERE CodigoDeBarra = @CodigoDeBarra";
+                cmd.CommandType = System.Data.CommandType.Text;
+
+                cmd.Parameters.AddWithValue("CodigoDeBarra", _codigoBarra);
+
+                cn.Open();
+                using (SqlDataReader rd = cmd.ExecuteReader())
+                {
+                    produto = new Produto();
+                    while (rd.Read())
+                    {
+                        produto.Id = (int)rd["Id"];
+                        produto.Nome = rd["Nome"].ToString();
+                        produto.Preco = Convert.ToDouble(rd["Preco"]);
+                        produto.Estoque = (int)rd["Estoque"];
+                        produto.CodigoDeBarra = rd["CodigoDeBarra"].ToString();
+                    }
+                    return produto;
+                }
+            }
+            catch
+            {
+                throw new Exception("Ocorreu um erro ao buscar o codigo de barra do produto no banco de dados");
+            }
+            finally
+            {
+                cn.Close();
+            }
+
+
+
+
+        }
+
 
 
     }

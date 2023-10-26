@@ -40,10 +40,11 @@
             this.buttonCancelar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridViewUsuario = new System.Windows.Forms.DataGridView();
-            this.bindingSourceUsuario = new System.Windows.Forms.BindingSource(this.components);
             this.nomeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nomeUsuarioDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ativoDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.bindingSourceUsuario = new System.Windows.Forms.BindingSource(this.components);
+            this.comboBoxBuscarPor = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewUsuario)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceUsuario)).BeginInit();
             this.SuspendLayout();
@@ -59,7 +60,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 83);
+            this.label2.Location = new System.Drawing.Point(0, 84);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 20);
             this.label2.TabIndex = 1;
@@ -77,9 +78,9 @@
             // 
             // textBoxBuscarPor
             // 
-            this.textBoxBuscarPor.Location = new System.Drawing.Point(12, 106);
+            this.textBoxBuscarPor.Location = new System.Drawing.Point(192, 106);
             this.textBoxBuscarPor.Name = "textBoxBuscarPor";
-            this.textBoxBuscarPor.Size = new System.Drawing.Size(525, 27);
+            this.textBoxBuscarPor.Size = new System.Drawing.Size(345, 27);
             this.textBoxBuscarPor.TabIndex = 3;
             // 
             // buttonAlterar
@@ -133,7 +134,7 @@
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(1000, 24);
+            this.label3.Size = new System.Drawing.Size(961, 24);
             this.label3.TabIndex = 9;
             this.label3.Text = "Buscar Usuario";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -157,10 +158,6 @@
             this.dataGridViewUsuario.RowTemplate.Height = 29;
             this.dataGridViewUsuario.Size = new System.Drawing.Size(955, 253);
             this.dataGridViewUsuario.TabIndex = 10;
-            // 
-            // bindingSourceUsuario
-            // 
-            this.bindingSourceUsuario.DataSource = typeof(Models.Usuario);
             // 
             // nomeDataGridViewTextBoxColumn
             // 
@@ -189,11 +186,28 @@
             this.ativoDataGridViewCheckBoxColumn.ReadOnly = true;
             this.ativoDataGridViewCheckBoxColumn.Width = 60;
             // 
+            // bindingSourceUsuario
+            // 
+            this.bindingSourceUsuario.DataSource = typeof(Models.Usuario);
+            // 
+            // comboBoxBuscarPor
+            // 
+            this.comboBoxBuscarPor.FormattingEnabled = true;
+            this.comboBoxBuscarPor.Items.AddRange(new object[] {
+            "Nome ",
+            "Nome de usuário",
+            "Todos"});
+            this.comboBoxBuscarPor.Location = new System.Drawing.Point(0, 107);
+            this.comboBoxBuscarPor.Name = "comboBoxBuscarPor";
+            this.comboBoxBuscarPor.Size = new System.Drawing.Size(151, 28);
+            this.comboBoxBuscarPor.TabIndex = 11;
+            // 
             // FormBuscarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1000, 450);
+            this.ClientSize = new System.Drawing.Size(961, 442);
+            this.Controls.Add(this.comboBoxBuscarPor);
             this.Controls.Add(this.dataGridViewUsuario);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.buttonCancelar);
@@ -231,5 +245,6 @@
         private DataGridViewTextBoxColumn nomeUsuarioDataGridViewTextBoxColumn;
         private DataGridViewCheckBoxColumn ativoDataGridViewCheckBoxColumn;
         private BindingSource bindingSourceUsuario;
+        private ComboBox comboBoxBuscarPor;
     }
 }
