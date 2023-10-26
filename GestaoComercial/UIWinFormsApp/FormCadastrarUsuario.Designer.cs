@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.textBoxNome = new System.Windows.Forms.TextBox();
+            this.bindingSourceCadastro = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.textBoxNomeUsuario = new System.Windows.Forms.TextBox();
@@ -41,7 +42,6 @@
             this.buttonSalvar = new System.Windows.Forms.Button();
             this.buttonCancelar = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.bindingSourceCadastro = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bindingSourceCadastro)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,6 +52,10 @@
             this.textBoxNome.Name = "textBoxNome";
             this.textBoxNome.Size = new System.Drawing.Size(431, 27);
             this.textBoxNome.TabIndex = 0;
+            // 
+            // bindingSourceCadastro
+            // 
+            this.bindingSourceCadastro.DataSource = typeof(Models.Usuario);
             // 
             // label1
             // 
@@ -131,6 +135,7 @@
             this.buttonSalvar.TabIndex = 9;
             this.buttonSalvar.Text = "&Salvar";
             this.buttonSalvar.UseVisualStyleBackColor = true;
+            this.buttonSalvar.Click += new System.EventHandler(this.buttonSalvar_Click);
             // 
             // buttonCancelar
             // 
@@ -150,10 +155,6 @@
             this.label5.TabIndex = 11;
             this.label5.Text = "Cadastrar usuario";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // bindingSourceCadastro
-            // 
-            this.bindingSourceCadastro.DataSource = typeof(Models.Usuario);
             // 
             // FormCadastrarUsuario
             // 
