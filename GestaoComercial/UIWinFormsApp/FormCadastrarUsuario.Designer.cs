@@ -115,6 +115,7 @@
             this.textBoxConfirmaçãoSenha.Name = "textBoxConfirmaçãoSenha";
             this.textBoxConfirmaçãoSenha.Size = new System.Drawing.Size(189, 27);
             this.textBoxConfirmaçãoSenha.TabIndex = 7;
+            
             // 
             // checkBoxAtivo
             // 

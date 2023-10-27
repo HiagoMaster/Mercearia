@@ -19,6 +19,10 @@ namespace UIWinFormsApp
         {
             InitializeComponent();
             id = _id;
+            if (id == 0)
+                bindingSourceCadastro.AddNew();
+            else
+                bindingSourceCadastro.DataSource = new UsuarioBLL().BuscarPorId(id);
         }
 
         private void buttonSalvar_Click(object sender, EventArgs e)
@@ -41,5 +45,7 @@ namespace UIWinFormsApp
                 MessageBox.Show(ex.Message);
             }
         }
+
+       
     }
 }

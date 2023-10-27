@@ -100,7 +100,7 @@ namespace DAL
             try
             {
                 SqlCommand cmd = cn.CreateCommand();
-                cmd.CommandText = "SELECT Id, Nome, Preco, Estoque, CodigoDeBarra";
+                cmd.CommandText = "SELECT Id, Nome, Preco, Estoque, CodigoDeBarra FROM PRODUTO";
                 cmd.CommandType = System.Data.CommandType.Text;
 
                 cn.Open();
@@ -112,7 +112,7 @@ namespace DAL
                         produto.Id = (int)rd["Id"];
                         produto.Nome = rd["Nome"].ToString();
                         produto.Preco = Convert.ToDouble(rd["Preco"]);
-                        produto.Estoque = (int)rd["Estoque"];
+                        produto.Estoque = Convert.ToDouble(rd["Estoque"]);
                         produto.CodigoDeBarra = rd["CodigoDeBarra"].ToString();
                         produtoList.Add(produto);
 
@@ -160,7 +160,7 @@ namespace DAL
                         produto.Id = (int)rd["Id"];
                         produto.Nome = rd["Nome"].ToString();
                         produto.Preco = Convert.ToDouble(rd["Preco"]);
-                        produto.Estoque = (int)rd["Estoque"];
+                        produto.Estoque = Convert.ToDouble(rd["Estoque"]);
                         produto.CodigoDeBarra = rd["CodigoDeBarra"].ToString();
                     }
                     return produto;
@@ -200,11 +200,13 @@ namespace DAL
                     produto = new Produto();
                     while (rd.Read())
                     {
+                        
                         produto.Id = (int)rd["Id"];
                         produto.Nome = rd["Nome"].ToString();
                         produto.Preco = Convert.ToDouble(rd["Preco"]);
-                        produto.Estoque = (int)rd["Estoque"];
+                        produto.Estoque = Convert.ToDouble(rd["Estoque"]);
                         produto.CodigoDeBarra = rd["CodigoDeBarra"].ToString();
+                        produtoList.Add(produto);
 
                     }
                     return produtoList;
@@ -231,7 +233,7 @@ namespace DAL
                 cmd.CommandText = @"SELECT Id, Nome, Preco, Estoque, CodigoDeBarra FROM Produto WHERE CodigoDeBarra = @CodigoDeBarra";
                 cmd.CommandType = System.Data.CommandType.Text;
 
-                cmd.Parameters.AddWithValue("CodigoDeBarra", _codigoBarra);
+                cmd.Parameters.AddWithValue("@CodigoDeBarra", _codigoBarra);
 
                 cn.Open();
                 using (SqlDataReader rd = cmd.ExecuteReader())
@@ -242,7 +244,7 @@ namespace DAL
                         produto.Id = (int)rd["Id"];
                         produto.Nome = rd["Nome"].ToString();
                         produto.Preco = Convert.ToDouble(rd["Preco"]);
-                        produto.Estoque = (int)rd["Estoque"];
+                        produto.Estoque = Convert.ToDouble(rd["Estoque"]);
                         produto.CodigoDeBarra = rd["CodigoDeBarra"].ToString();
                     }
                     return produto;

@@ -77,7 +77,8 @@
             "Nome",
             "Preco",
             "Estoque",
-            "CodigoDeBarra"});
+            "CodigoDeBarra",
+            "Todos"});
             this.comboBoxBuscarPor.Location = new System.Drawing.Point(12, 147);
             this.comboBoxBuscarPor.Name = "comboBoxBuscarPor";
             this.comboBoxBuscarPor.Size = new System.Drawing.Size(151, 28);
