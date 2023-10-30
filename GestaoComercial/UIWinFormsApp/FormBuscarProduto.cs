@@ -1,4 +1,6 @@
 ﻿using BLL;
+using DAL;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -43,6 +45,33 @@ namespace UIWinFormsApp
 
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Inserir_Click(object sender, EventArgs e)
+        {
+            using(FormCadastrarProduto frm = new FormCadastrarProduto())
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void buttonAlterar_Click(object sender, EventArgs e)
+        {
+            int id = ((Produto)bindingSourceProduto.Current).Id;
+            using(FormCadastrarProduto form = new FormCadastrarProduto())
+            {
+                form.ShowDialog();
+            }
+        }
+
+        private void buttonExcluir_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Deseja realmente excluir esse produto?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                return;
+            int id = ((Produto)bindingSourceProduto.Current).Id;
+            new ProdutoBLL().Excluir(id);
+            bindingSourceProduto.RemoveCurrent();
+            MessageBox.Show("Produto excluido com sucesso!");
         }
     }
 }
